@@ -48,4 +48,9 @@ function downloadImageByURL(url, filePath) {
   .pipe(fs.createWriteStream("./" + filePath + ".jpg"));
 }
 
-getRepoContributors("jquery", "jquery", imageConsoleLog);
+if(GITHUB_USER === undefined || GITHUB_TOKEN === undefined){
+  console.log("Unable to run function. Please input GITHUB_USER & GITHUB_TOKEN in command line.")
+}else{
+  getRepoContributors("jquery", "jquery", imageConsoleLog);
+}
+
