@@ -15,21 +15,25 @@ function getRequestOptions(path) {
       'User-Agent': "GitHub Avatar Downloader - Student Project"
     },
     qs: {
-      access_token: GITHUB_TOKEN
+      accessToken: GITHUB_TOKEN
     }
   };
 }
 
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+    .pipe(fs.createWriteStream("./" + filePath + ".jpg"));
+}
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
 
-  var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
+  var requestURL = 'https://' + GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
   console.log(requestURL);
 
   request(getRequestOptions(requestURL), function(err, response, body) {
     if (err){
-    console.log("Failed to request URL");
+      console.log("Failed to request URL");
     }else{
       const data = JSON.parse(body);
       cb(data);
@@ -41,15 +45,11 @@ var imageConsoleLog = (data) => {
   data.forEach((obj) => {
     downloadImageByURL(obj.avatar_url, obj.login);
   });
-}
+};
 
-function downloadImageByURL(url, filePath) {
-  request.get(url)
-  .pipe(fs.createWriteStream("./" + filePath + ".jpg"));
-}
 
 if(GITHUB_USER === undefined || GITHUB_TOKEN === undefined){
-  console.log("Unable to run function. Please input GITHUB_USER & GITHUB_TOKEN in command line.")
+  console.log("Unable to run function. Please input GITHUB_USER & GITHUB_TOKEN in command line.");
 }else{
   getRepoContributors("jquery", "jquery", imageConsoleLog);
 }
