@@ -38,7 +38,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 var imageConsoleLog = (data) => {
   data.forEach((obj) => {
-    console.log(obj.avatar_url);
+    downloadImageByURL(obj.avatar_url, obj.login);
   });
 }
 
