@@ -3,6 +3,7 @@ var fs = require('fs');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
+//implemented command line arguments at the start by accident
 
 const GITHUB_USER =  process.argv[2];
 const GITHUB_TOKEN = process.argv[3];
