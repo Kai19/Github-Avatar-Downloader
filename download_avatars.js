@@ -22,7 +22,6 @@ function getRequestOptions(path) {
 
 function getRepoContributors(repoOwner, repoName, cb) {
 
-
   var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
   console.log(requestURL);
 
@@ -31,13 +30,17 @@ function getRepoContributors(repoOwner, repoName, cb) {
     console.log("Failed to request URL");
     }else{
       const data = JSON.parse(body);
-      console.log(data);
+      // console.log(data);
+      cb(data);
     }
   });
 }
 
+var imageConsoleLog = (data) => {
+  data.forEach((obj) => {
+    console.log(obj.avatar_url);
+  });
+}
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
-});
+
+getRepoContributors("jquery", "jquery", imageConsoleLog);
