@@ -1,4 +1,5 @@
 var request = require('request');
+var fs = require('fs');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -30,7 +31,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
     console.log("Failed to request URL");
     }else{
       const data = JSON.parse(body);
-      // console.log(data);
       cb(data);
     }
   });
@@ -42,5 +42,9 @@ var imageConsoleLog = (data) => {
   });
 }
 
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+  .pipe(fs.createWriteStream("./" + filePath + ".jpg"));
+}
 
 getRepoContributors("jquery", "jquery", imageConsoleLog);
